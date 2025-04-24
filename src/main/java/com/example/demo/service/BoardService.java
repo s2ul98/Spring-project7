@@ -2,6 +2,8 @@ package com.example.demo.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+
 import com.example.demo.dto.BoardDTO;
 import com.example.demo.entity.Board;
 
@@ -18,12 +20,25 @@ public interface BoardService {
 	
 	// 게시물 목록 조회
 	// 리턴값 : 게시물 리스트
-	List<BoardDTO> getList();
+//	List<BoardDTO> getList();
+	Page<BoardDTO> getList(int pageNumber);
 	
 	// 게시물 상세 조회
 	// 매개변수 : 게시물 번호
 	// 반환값 : 해당 게시믈의 정보
 	BoardDTO read(int no);
+	
+	// 게시물 수정
+	// 매개변수 : 수정된 게시물 정보
+	// 반환값 : 처리결과는 없음
+	void modify(BoardDTO dto);
+	
+	// 게시물 삭제
+	// 매개변수 : 게시물 번호
+	// 반환값 : 처리 결과 없음
+	void remove(int no);
+	
+	
 	
 	// DTO를 Entity로 바꾸는 메소드
 	// 인터페이스에 일반 함수를 추가하는 방법
@@ -54,6 +69,22 @@ public interface BoardService {
 		return dto;
 		
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
 
 /*

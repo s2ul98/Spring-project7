@@ -1,6 +1,8 @@
 package com.example.demo.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.querydsl.ListQuerydslPredicateExecutor;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 
 import com.example.demo.entity.Board;
 
@@ -9,7 +11,9 @@ import com.example.demo.entity.Board;
 // repository : sql을 생성
 // 1. jpa 상속
 // 2. entity와 pk 타입 정의
-public interface BoardRepository extends JpaRepository<Board, Integer> {
+
+// 리파지토리에 querydsl 기능 추가
+public interface BoardRepository extends JpaRepository<Board, Integer>, QuerydslPredicateExecutor {
 	
 	
 

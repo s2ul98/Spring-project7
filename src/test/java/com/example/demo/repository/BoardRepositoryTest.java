@@ -105,27 +105,17 @@ public class BoardRepositoryTest {
 		repository.save(board);
 	}
 	
+
 	@Test
 	public void 게시물등록2() {
-		BoardDTO dto = BoardDTO.builder()
-										.title("3번")
-										.content("주니어")
-										.writer("김주녕")
-										.build();
+		Board board2 = Board.builder()
+				.title("31번")
+				.content("마돈나돈나돈나")
+				.writer("윤정은")
+				.build();
 		
-		
-		int newNo = service.register(dto);
-		
-		System.out.println("새로운 게시물 번호 : " + newNo);
+		repository.save(board2);
 	}
-	
-	@Test
-	public void 게시물단건조회1() {
-		BoardDTO dto = service.read(2);
-		
-		System.out.println(dto);
-	}
-	
 	
 	
 	

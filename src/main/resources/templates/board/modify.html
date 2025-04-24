@@ -1,34 +1,42 @@
 <!DOCTYPE html>
 
+<th:block th:replace="~{/layout/basic :: setContent(~{this::content})}">
+
+    <th:block th:fragment="content"> 
+    
 
 <h1 class="mt-4">Board Modify Page</h1>
+
+
+
 
 <form>
 
   <div class="form-group">
     <label >번호</label>
-    <input type="text" class="form-control" name="" value="1" readonly>
+    <!-- 입력필드의 name 속성은 dto필드와 매핑되어야함 -->
+    <input type="text" class="form-control" name="no" th:value="${dto.no}" readonly>
   </div>
 
   <div class="form-group">
     <label >제목</label>
-    <input type="text" class="form-control" name="" value="1번">
+    <input type="text" class="form-control" name="title" th:value="${dto.title}">
   </div>
   <div class="form-group">
     <label >내용</label>
-    <textarea class="form-control" rows="5" name="">내용입니다</textarea>
+    <textarea class="form-control" rows="5" name="content">[[${dto.content}]]</textarea>
   </div>
   <div class="form-group">
     <label >작성자</label>
-    <input type="text" class="form-control" name="" value="둘리" readonly>
+    <input type="text" class="form-control" name="writer" th:value="${dto.writer}" readonly>
   </div>
   <div class="form-group">
     <label >등록일</label>
-    <input type="text" class="form-control" value="2023/02/21 10:00:00" readonly>
+    <input type="text" class="form-control" th:value="${ #temporals.format( dto.regDate , 'yyyy/MM/dd HH:mm:ss') }" readonly>
   </div>
   <div class="form-group">
     <label >수정일</label>
-    <input type="text" class="form-control" value="2023/02/21 10:00:00" readonly>
+    <input type="text" class="form-control" th:value="${ #temporals.format( dto.medDate , 'yyyy/MM/dd HH:mm:ss') }" readonly>
   </div>
 
 </form>
@@ -39,4 +47,70 @@
 
 <button type="button" class="btn btn-danger removeBtn">삭제</button>
 
+    </th:block>
+
+</th:block>
+
+<!-- 컨트롤러에서 전달한 데이터를 처리하기 위해서 인라인 속성 추가 -->
+<!-- 인라인 속성 : 컨트롤러에서 전달한 데이터를 자바스크립트의 자료형에 맞게 변환 -->
+
+<script th:inline = "javascript">
+
+	// 수정버튼을 클릭했을 때 수정 처리를 요청
+	// 제이쿼리 라이브러리의 함수를 사용
+	 
+	// $() : 선택자를 사용해서 html 문서의 태그를 가져오는 함수
+	// 클래스 선택자로 수정 버튼 가져오기
+	const btn = $('.modifyBtn');
+	
+	// 폼태그 가져오기 
+	const form = $('form');
+	
+	console.log(form);
+
+	// 수정 버튼 클릭 이벤트 등록
+	modifyBtn.click(()=>{
+		
+		// 확인을 누트면 true
+		// 취소를 누르면 false가 반환됨
+		// 확인을 눌렀으면 수정 진행
+		if(confirm('수정하시겠습니까?')) {
+			
+			// 폼태그에
+			form
+				.attr('action', '/board/modify')
+				.attr('method', 'post')
+				.submit();
+			
+		} else {
+			// 수정을 눌렀으면 함수 종료
+			return;
+		}
+	
+	});
+	
+	// 목록 버튼을 클릭하면 목록화면으로 이동
+	const listBtn = $('.listBtn');
+	
+	listBtn.click(() => {
+		
+		form
+		.attr('action', '/board/list')
+		.attr('method', 'get')
+		.submit();
+	});
+	
+	// 삭제버튼을 클릭하면 삭제 처리요청
+	const removeBtn = $('.removeBtn');
+	
+	removeBtn.click(() => {
+		
+		form
+		.attr('action', '/board/remove')
+		.attr('method', 'post')
+		.submit();
+		
+	});
+	
+</script>
 

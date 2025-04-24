@@ -26,6 +26,10 @@
     </thead>
     <!-- 실 데이터 -->
     <!-- 컨트롤러에서 전달받은 데이터를 출력 -->
+    
+    <!--  -->
+    현재페이지번호 :
+    
     <tbody>
     <tr th:each="dto : ${list}">
 
@@ -33,7 +37,8 @@
     <!-- 게시물 번호를 클릭하면 상세화면으로 이동 -->
 	<th>
 	<!-- (no = 변수) => ? no=값 -->
-		<a th:href="@{/board/read(no = ${dto.no})}">
+	<!-- 링크에 페이지 번호를 파라미터로 추가 -->
+		<a th:href="@{/board/read(no = ${dto.no}, page = ${list.number + 1})}">
 		[[${dto.no}]]
 		</a>
 		
@@ -80,17 +85,21 @@
 	</li>
 </ul>-->
 
+<!-- 컨트롤러에서 전달받은 페이지 객체 -->
+<!-- 페이지 객체에서 전체 페이지 수 꺼내기 -->
+<!-- [[ ${list.totalPages} ]] -->
+
 <!-- 2. 전달받은 전체 페이지 수를 이용하여 페이지 번호 목록을 자동으로 생성 -->
 <!-- numbers 객체를 사용하여 1부터 3까지 목록 생성 [1,2,3] -->
-<!--<th:block th:each="page : ${#numbers.sequence(1, list.totalPages)}">
+<!-- <th:block th:each="page : ${#numbers.sequence(1, list.totalPages)}">
 	[[${page}]]
-</th:block>-->
+</th:block> -->
 
 <!-- 3. 페이지 번호 목록 생성 및 'active' 클래스 적용 -->
 <!-- if문에서 list.number는 현재페이지 번호, page는 페이지 번호 목록 -->
 <!-- 현재 페이지 번호에 'active' 클래스 추가 -->
 <!-- 주소에서 page 번호 바꿔서 테스트! -->
-<!--<ul class="pagination h-100 justify-content-center align-items-center">
+<!-- <ul class="pagination h-100 justify-content-center align-items-center">
 	<th:block th:each="page : ${#numbers.sequence(1, list.totalPages)}">
 		<th:block th:if="${list.number+1 == page}">
 			<li class="page-item active">
@@ -103,11 +112,11 @@
 			</li>
 		</th:block>
 	</th:block>
-</ul>-->
+</ul> -->
 
 <!-- 4. 페이지 번호를 클릭하면 해당 페이지로 이동하도록 처리 (최종) -->
 <!-- a 태그에 list 주소를 입력하고, 선택한 페이지 번호를 파라미터로 전달 -->
-<!--<ul class="pagination h-100 justify-content-center align-items-center">
+<ul class="pagination h-100 justify-content-center align-items-center">
 	<th:block th:each="page : ${#numbers.sequence(1, list.totalPages)}">
 		<th:block th:if="${list.number+1 == page}">
 			<li class="page-item active">					
@@ -120,7 +129,7 @@
 			</li>
 		</th:block>
 	</th:block>
-</ul>-->
+</ul>
 
 <!-- 등록이 끝나고 목록으로 이동했을 떄, 새로운 게시물 번호를 표시 -->
 <script th:inline="javascript">
